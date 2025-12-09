@@ -21,7 +21,7 @@ languageSelect.addEventListener("change", (e) => {
 });
 
 // n8n Webhook PRODUCTION
-const N8N_WEBHOOK_URL = "https:/n8n.srv1102290.hstgr.cloud/webhook/28568d52-8010-42c8-bfba-1c27145f158e";
+const N8N_WEBHOOK_URL = "https://n8n.srv1102290.hstgr.cloud/webhook/28568d52-8010-42c8-bfba-1c27145f158e";
 
 // Login
 loginBtn.addEventListener("click", () => {
@@ -67,4 +67,5 @@ sendPromptBtn.addEventListener("click", async () => {
     statusEl.textContent = "Fehler beim Senden. Bitte später erneut versuchen.";
   }
 });
+
 
