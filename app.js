@@ -21,9 +21,10 @@ languageSelect.addEventListener("change", (e) => {
 });
 
 // n8n Webhook PRODUCTION
-const N8N_WEBHOOK_URL = "https://n8n.srv1102290.hstgr.cloud/webhook/28568d52-8010-42c8-bfba-1c27145f158e";
+const N8N_WEBHOOK_URL =
+  "https://n8n.srv1102290.hstgr.cloud/webhook/28568d52-8010-42c8-bfba-1c27145f158e";
 
-// Login
+// Login → öffnet Generator
 loginBtn.addEventListener("click", () => {
   loginSection.classList.add("hidden");
   generatorSection.classList.remove("hidden");
@@ -32,13 +33,15 @@ loginBtn.addEventListener("click", () => {
 // Prompt senden
 sendPromptBtn.addEventListener("click", async () => {
   const prompt = promptInput.value.trim();
+
   if (!prompt) {
     statusEl.textContent = "Bitte gib einen Prompt ein.";
     return;
   }
 
+  // Reset Preview
   previewWrapper.classList.add("hidden");
-  imagePreview.removeAttribute("src");
+  imagePreview.src = "";
   downloadLink.href = "#";
 
   statusEl.textContent = "Prompt wird an SURAFLEX gesendet…";
@@ -51,29 +54,26 @@ sendPromptBtn.addEventListener("click", async () => {
     });
 
     let data = null;
-    try { data = await res.json(); } catch (e) {}
+    try {
+      data = await res.json();
+    } catch (e) {
+      console.warn("Keine JSON-Antwort erhalten.");
+    }
 
+    // UI-Status setzen
     statusEl.textContent =
       (data && (data.message || data.status)) ||
-      "Prompt empfangen. Dein Bild wird generiert.";
+      "Prompt empfangen. Bild wird generiert…";
 
+    // Wird ein Bild zurückgegeben?
     if (data && data.imageUrl) {
       imagePreview.src = data.imageUrl;
       downloadLink.href = data.imageUrl;
       previewWrapper.classList.remove("hidden");
     }
   } catch (err) {
-    console.error(err);
-    statusEl.textContent = "Fehler beim Senden. Bitte später erneut versuchen.";
-    } catch (err) {
-    
-  console.error("Fetch error:", err);
-  statusEl.textContent =
-    "Fehler beim Senden des Prompts. Bitte später erneut versuchen.";
-}
+    console.error("Fetch error:", err);
+    statusEl.textContent =
+      "Fehler beim Senden des Prompts. Bitte später erneut versuchen.";
   }
 });
-
-
-
-
