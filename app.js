@@ -65,8 +65,15 @@ sendPromptBtn.addEventListener("click", async () => {
   } catch (err) {
     console.error(err);
     statusEl.textContent = "Fehler beim Senden. Bitte später erneut versuchen.";
+    } catch (err) {
+    
+  console.error("Fetch error:", err);
+  statusEl.textContent =
+    "Fehler beim Senden des Prompts. Bitte später erneut versuchen.";
+}
   }
 });
+
 
 
 
